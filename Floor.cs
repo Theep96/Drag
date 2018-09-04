@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Floor : MonoBehaviour
 { 
+    private float stairsPos = 0f;
+    private float stairZ = 100f;
+    private float stairY = 1f;
     void CreateGround()
     {
         GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -106,11 +109,32 @@ public class Floor : MonoBehaviour
         plane.GetComponent<Renderer>().material.color = new Color(13 / 255f, 101 / 255f, 16 / 255f);
         plane.AddComponent<Rigidbody>().isKinematic = true;
     }
+    
+    
+    void CreateStairs(Transform parent)
+    {
+        GameObject stairs = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        stairs.transform.localScale = new Vector3(10, 2, 6);
+        stairs.transform.Translate(0, stairY, stairZ);
+        stairs.GetComponent<Renderer>().material.color = new Color(83 / 255f, 83 / 255f, 83 / 255f);
+       
+        stairs.name = "Stairs";
+
+        stairY = stairY + 2;
+        stairZ = stairZ + 5;
+    }
 
 
     void Start()
     {
         CreateGround();
+        GameObject stairsParent = new GameObject("Stairs");
+            for (float i = stairsPos; i < 35; i++)
+        {
+            CreateStairs(stairsParent.transform);
+            
+
+        }
         CreatePlatforms();
     }
 }
